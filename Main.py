@@ -356,7 +356,7 @@ def resend_bot(data):  # тело бота, пересылающего сооб�
                 private_delete(text[1:], peer)
             else:
                 private_send(text, peer, attachment_list, resend_string)
-        if who != peer:  # Если это сообщение в беседе
+        if who != peer and peer != 2000000002:  # Если это сообщение в беседе
             if text[0] == '/help':
                 sms = 'В запросах пробел между параметрами обязателен!\n\n' \
                       '/id - показывает ваш id для создания канала. Передайте его собеседнику из telegram\n\n' \
@@ -374,17 +374,27 @@ def resend_bot(data):  # тело бота, пересылающего сооб�
             else:
                 group_send(text, peer, who, attachment_list, resend_string)
 
-        if who == 2000000002:
-            if text[0] == '/id':
+        if peer == 2000000002:
+            if text[0] == '/id' and who == 152628608:
                 send_msg(resend_bot_session, peer, str(peer))
-            elif text[0] == '/create':
+            elif text[0] == '/create' and who == 152628608:
                 group_crate(text[1:], peer)
-            elif text[0] == '/delete':
+            elif text[0] == '/delete' and who == 152628608:
                 group_delete(peer)
-            else:
-                text = text + 'это сообщение из говночата'
+            elif attachment_list:
+                text += 'это сообщение из говночата'
                 group_send(text, peer, who, attachment_list, resend_string)
 
+        # if peer == 2000000002:
+        #     if text[0] == '/id' and who == 152628608:
+        #         send_msg(resend_bot_session, peer, str(peer))
+        #     elif text[0] == '/create' and who == 152628608:
+        #         group_crate(text[1:], peer)
+        #     elif text[0] == '/delete' and who == 152628608:
+        #         group_delete(peer)
+        #     elif attachment_list:
+        #         text += 'это сообщение из говночата'
+        #         group_send(text, peer, who, attachment_list, resend_string)
 
 
 @app.route('/', methods=['POST'])
