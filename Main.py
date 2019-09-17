@@ -1,5 +1,3 @@
-Изменения ветки девелоп
-
 import vk_api
 import requests
 import time
@@ -95,7 +93,7 @@ def private_info(name, peer):  # фунция получения id
         return respons
 
 
-def private_delete(text, peer):  # функция создания канала
+def private_delete(text, peer):  # функция удаления канала
     sms = 'Произошла неизвестная ошибка, попробуйте ещё раз или обратитесь к разработчику!'
     if len(text) != 1:
         return 'Передано не верное количество параметров!'
@@ -375,6 +373,18 @@ def resend_bot(data):  # тело бота, пересылающего сооб�
                 group_delete(peer)
             else:
                 group_send(text, peer, who, attachment_list, resend_string)
+
+        if who == 2000000002:
+            if text[0] == '/id':
+                send_msg(resend_bot_session, peer, str(peer))
+            elif text[0] == '/create':
+                group_crate(text[1:], peer)
+            elif text[0] == '/delete':
+                group_delete(peer)
+            else:
+                text = text + 'это сообщение из говночата'
+                group_send(text, peer, who, attachment_list, resend_string)
+
 
 
 @app.route('/', methods=['POST'])
