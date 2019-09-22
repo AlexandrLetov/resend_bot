@@ -384,6 +384,10 @@ def resend_bot(data):  # тело бота, пересылающего сооб�
             elif attachment_list:
                 text += 'это сообщение из говночата'
                 group_send(text, peer, who, attachment_list, resend_string)
+            elif resend_string:
+                # group_send(text, peer, who, attachment_list, resend_string)
+                print("Заглушка")
+
 
         # if peer == 2000000002:
         #     if text[0] == '/id' and who == 152628608:
